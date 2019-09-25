@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1lcta4o" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="2.2.4">
+  <bpmn:process id="userList" name="Get userList" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_0akyfrr</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_0akyfrr" sourceRef="StartEvent_1" targetRef="initUser" />
+    <bpmn:sequenceFlow id="SequenceFlow_0g30llj" sourceRef="userToken" targetRef="getList" />
+    <bpmn:serviceTask id="userToken" name="Get user Token" camunda:class="camunda_demo.camunda.userToken">
+      <bpmn:incoming>SequenceFlow_0yt321k</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0g30llj</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="getList" name="Get users list" camunda:class="camunda_demo.camunda.userList">
+      <bpmn:incoming>SequenceFlow_0g30llj</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1j1du0f</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1j1du0f" sourceRef="getList" targetRef="Task_17udtm6" />
+    <bpmn:serviceTask id="Task_17udtm6" name="write users lists" camunda:class="camunda_demo.camunda.printList">
+      <bpmn:incoming>SequenceFlow_1j1du0f</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_03jmofc</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:endEvent id="EndEvent_07aeoyt">
+      <bpmn:incoming>SequenceFlow_03jmofc</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_03jmofc" sourceRef="Task_17udtm6" targetRef="EndEvent_07aeoyt" />
+    <bpmn:sequenceFlow id="SequenceFlow_0yt321k" sourceRef="initUser" targetRef="userToken" />
+    <bpmn:scriptTask id="initUser" name="init user" scriptFormat="Javascript">
+      <bpmn:incoming>SequenceFlow_0akyfrr</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0yt321k</bpmn:outgoing>
+      <bpmn:script>
+    execution.setVariable("username", "admin");
+execution.setVariable("password", "admin");
+</bpmn:script>
+    </bpmn:scriptTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="userList">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="187" y="104" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0akyfrr_di" bpmnElement="SequenceFlow_0akyfrr">
+        <di:waypoint x="223" y="122" />
+        <di:waypoint x="300" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0g30llj_di" bpmnElement="SequenceFlow_0g30llj">
+        <di:waypoint x="614" y="122" />
+        <di:waypoint x="717" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1tdi64r_di" bpmnElement="userToken">
+        <dc:Bounds x="514" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="ServiceTask_0r7odgg_di" bpmnElement="getList">
+        <dc:Bounds x="717" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1j1du0f_di" bpmnElement="SequenceFlow_1j1du0f">
+        <di:waypoint x="817" y="122" />
+        <di:waypoint x="967" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_1dx83n6_di" bpmnElement="Task_17udtm6">
+        <dc:Bounds x="967" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="EndEvent_07aeoyt_di" bpmnElement="EndEvent_07aeoyt">
+        <dc:Bounds x="1202" y="104" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_03jmofc_di" bpmnElement="SequenceFlow_03jmofc">
+        <di:waypoint x="1067" y="122" />
+        <di:waypoint x="1202" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_0yt321k_di" bpmnElement="SequenceFlow_0yt321k">
+        <di:waypoint x="400" y="122" />
+        <di:waypoint x="514" y="122" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ScriptTask_1jc7ezh_di" bpmnElement="initUser">
+        <dc:Bounds x="300" y="82" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
